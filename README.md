@@ -37,3 +37,18 @@ DevOps_CI_<YOUR_ROLL_NUMBER>/
 │
 ├── README.md
 └── .gitignore
+## Core Features
+
+- View available movies and show timings
+- Display available cinema seats
+- Allocate seats to customers
+- Prevent duplicate seat bookings
+- Cancel existing bookings
+- Calculate ticket costs
+- Confirm movie bookings
+
+## Testing
+
+The application has been tested using Pytest.
+
+All automated test cases pass successfully.
