@@ -11,6 +11,15 @@ def test_view_movies():
     assert "Interstellar" in movies
 
 
+def test_view_shows():
+    cinema = CinemaBooking()
+
+    shows = cinema.view_shows("Leo")
+
+    assert "10:00 AM" in shows
+    assert "6:00 PM" in shows
+
+
 def test_display_seats():
     cinema = CinemaBooking()
 
@@ -38,7 +47,10 @@ def test_duplicate_seat_prevention():
 
     cinema.book_seat("A1")
 
-    with pytest.raises(ValueError, match="already booked"):
+    with pytest.raises(
+        ValueError,
+        match="Duplicate booking prevented: A1 is already booked"
+    ):
         cinema.book_seat("A1")
 
 
@@ -79,3 +91,14 @@ def test_allocate_seat():
 
     assert cinema.allocate_seat("B2") is True
     assert "B2" not in cinema.get_available_seats()
+
+
+def test_display_available_seats():
+    cinema = CinemaBooking()
+
+    cinema.allocate_seat("A1")
+
+    available_seats = cinema.display_available_seats()
+
+    assert "A1" not in available_seats
+    assert "A2" in available_seats
