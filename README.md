@@ -43,3 +43,6 @@ DevOps_CI_24BCS206/
 │
 ├── README.md
 └── .gitignore
+## Seat Validation Enhancement
+
+The system validates seat input before checking availability and prevents invalid or empty seat selections.
