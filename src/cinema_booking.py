@@ -14,7 +14,7 @@ class CinemaBooking:
             "Avengers: Endgame": ["12:00 PM", "4:00 PM", "8:00 PM"]
         }
 
-        # A1-A5, B1-B5, C1-C5
+        # Seats: A1-A5, B1-B5, C1-C5
         self.seats = {
             f"{chr(65 + row)}{seat}": False
             for row in range(3)
@@ -35,6 +35,13 @@ class CinemaBooking:
         """Return all seats and their booking status."""
         return self.seats.copy()
 
+    def display_available_seats(self):
+        """Return only seats that are currently available."""
+        return [
+            seat for seat, booked in self.seats.items()
+            if not booked
+        ]
+
     def check_seat_availability(self, seat):
         """Check whether a particular seat is available."""
         if seat not in self.seats:
@@ -48,7 +55,9 @@ class CinemaBooking:
             raise ValueError("Invalid seat number.")
 
         if self.seats[seat]:
-            raise ValueError("Seat is already booked.")
+            raise ValueError(
+                f"Cannot allocate {seat}: seat is already booked."
+            )
 
         self.seats[seat] = True
         return True
@@ -71,7 +80,9 @@ class CinemaBooking:
     def calculate_ticket_cost(self, number_of_tickets):
         """Calculate the total ticket cost."""
         if number_of_tickets <= 0:
-            raise ValueError("Number of tickets must be greater than zero.")
+            raise ValueError(
+                "Number of tickets must be greater than zero."
+            )
 
         return number_of_tickets * self.ticket_price
 
@@ -92,7 +103,9 @@ class CinemaBooking:
                 raise ValueError(f"Invalid seat number: {seat}")
 
             if self.seats[seat]:
-                raise ValueError(f"Seat {seat} is already booked.")
+                raise ValueError(
+                    f"Seat {seat} is already booked."
+                )
 
         for seat in seats:
             self.seats[seat] = True
