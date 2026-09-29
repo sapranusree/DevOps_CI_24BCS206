@@ -29,6 +29,7 @@ class CinemaBooking:
         """Return available show timings for a movie."""
         if movie not in self.shows:
             raise ValueError("Movie not found.")
+
         return self.shows[movie]
 
     def display_seats(self):
@@ -55,9 +56,7 @@ class CinemaBooking:
             raise ValueError("Invalid seat number.")
 
         if self.seats[seat]:
-            raise ValueError(
-                f"Cannot allocate {seat}: seat is already booked."
-            )
+            raise ValueError( )
 
         self.seats[seat] = True
         return True
@@ -100,7 +99,9 @@ class CinemaBooking:
 
         for seat in seats:
             if seat not in self.seats:
-                raise ValueError(f"Invalid seat number: {seat}")
+                raise ValueError(
+                    f"Invalid seat number: {seat}"
+                )
 
             if self.seats[seat]:
                 raise ValueError(
