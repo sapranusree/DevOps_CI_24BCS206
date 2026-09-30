@@ -35,13 +35,21 @@ class TestCinemaBooking(unittest.TestCase):
             cinema.check_seat_availability("A1")
         )
 
+    def test_invalid_empty_seat_validation(self):
+        cinema = CinemaBooking()
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "Seat number cannot be empty"
+        ):
+            cinema.check_seat_availability("")
+
     def test_successful_booking(self):
         cinema = CinemaBooking()
 
-        self.assertTrue(
-            cinema.book_seat("A1")
-        )
+        result = cinema.book_seat("A1")
 
+        self.assertTrue(result)
         self.assertFalse(
             cinema.check_seat_availability("A1")
         )
@@ -68,9 +76,7 @@ class TestCinemaBooking(unittest.TestCase):
         )
 
     def test_price_calculation(self):
-        cinema = CinemaBooking(
-            ticket_price=150
-        )
+        cinema = CinemaBooking(ticket_price=150)
 
         self.assertEqual(
             cinema.calculate_ticket_cost(2),
@@ -119,9 +125,9 @@ class TestCinemaBooking(unittest.TestCase):
     def test_allocate_seat(self):
         cinema = CinemaBooking()
 
-        self.assertTrue(
-            cinema.allocate_seat("B2")
-        )
+        result = cinema.allocate_seat("B2")
+
+        self.assertTrue(result)
 
         self.assertNotIn(
             "B2",
