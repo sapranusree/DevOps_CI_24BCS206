@@ -22,51 +22,49 @@ class CinemaBooking:
         }
 
     def view_movies(self):
-        """Return the list of available movies."""
         return self.movies
 
     def view_shows(self, movie):
-        """Return available show timings for a movie."""
         if movie not in self.shows:
             raise ValueError("Movie not found.")
 
         return self.shows[movie]
 
     def display_seats(self):
-        """Return all seats and their booking status."""
         return self.seats.copy()
 
     def display_available_seats(self):
-        """Return only seats that are currently available."""
         return [
-            seat for seat, booked in self.seats.items()
+            seat
+            for seat, booked in self.seats.items()
             if not booked
         ]
 
     def check_seat_availability(self, seat):
-        """Check whether a particular seat is available."""
+        if not isinstance(seat, str) or not seat.strip():
+            raise ValueError("Seat number cannot be empty.")
+
         if seat not in self.seats:
             raise ValueError("Invalid seat number.")
 
         return not self.seats[seat]
 
     def allocate_seat(self, seat):
-        """Allocate a seat to a customer."""
         if seat not in self.seats:
             raise ValueError("Invalid seat number.")
 
         if self.seats[seat]:
-            raise ValueError( )
+            raise ValueError(
+                f"Duplicate booking prevented: {seat} is already booked"
+            )
 
         self.seats[seat] = True
         return True
 
     def book_seat(self, seat):
-        """Book a cinema seat."""
         return self.allocate_seat(seat)
 
     def cancel_booking(self, seat):
-        """Cancel an existing booking."""
         if seat not in self.seats:
             raise ValueError("Invalid seat number.")
 
@@ -77,7 +75,6 @@ class CinemaBooking:
         return True
 
     def calculate_ticket_cost(self, number_of_tickets):
-        """Calculate the total ticket cost."""
         if number_of_tickets <= 0:
             raise ValueError(
                 "Number of tickets must be greater than zero."
@@ -86,11 +83,9 @@ class CinemaBooking:
         return number_of_tickets * self.ticket_price
 
     def calculate_price(self, number_of_tickets):
-        """Alias for ticket cost calculation."""
         return self.calculate_ticket_cost(number_of_tickets)
 
     def confirm_booking(self, movie, show_time, seats):
-        """Confirm a booking after validating movie, show and seats."""
         if movie not in self.movies:
             raise ValueError("Movie not found.")
 
@@ -122,8 +117,8 @@ class CinemaBooking:
         }
 
     def get_available_seats(self):
-        """Return all currently available seats."""
         return [
-            seat for seat, booked in self.seats.items()
+            seat
+            for seat, booked in self.seats.items()
             if not booked
         ]
